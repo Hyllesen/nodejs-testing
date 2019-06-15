@@ -29,4 +29,10 @@ app.patch("/todos/:index", (req, res) => {
   res.send({ done: todo.done });
 });
 
+app.post("/todos", (req, res) => {
+  const todo = req.body;
+  database.push(todo);
+  res.send(database[database.length - 1]);
+});
+
 module.exports = app;
