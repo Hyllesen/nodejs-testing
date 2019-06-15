@@ -14,7 +14,10 @@ const database = [
 
 app.get("/todos/:index", (req, res) => {
   const index = req.params.index;
-  res.send(database[index]);
+  if (database[index] === undefined) {
+    return res.status(404).send();
+  }
+  return res.send(database[index]);
 });
 
 app.get("/todos", (req, res) => {
@@ -37,8 +40,6 @@ app.post("/todos", (req, res) => {
 
 app.delete("/todos/:index", (req, res) => {
   const todoToDelete = database[req.params.index];
-  console.log(todoToDelete);
-
   res.send(todoToDelete);
   database = database.splice(req.params.index, 1);
 });

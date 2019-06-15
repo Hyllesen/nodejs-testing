@@ -27,3 +27,15 @@ test("it should return all todos", () => {
       { name: "washing clothes", done: false }
     ]);
 });
+
+it("should return 404 not found", () => {
+  return request(app)
+    .get("/todos/55")
+    .expect(404);
+});
+
+it("should return 404 on invalid index", () => {
+  return request(app)
+    .get("/todos/hey")
+    .expect(404);
+});
