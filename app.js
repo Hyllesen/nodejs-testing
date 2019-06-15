@@ -34,6 +34,9 @@ app.patch("/todos/:index", (req, res) => {
 
 app.post("/todos", (req, res) => {
   const todo = req.body;
+  if (todo.done === undefined || todo.name === undefined) {
+    return res.status(500).send();
+  }
   database.push(todo);
   res.send(database[database.length - 1]);
 });
