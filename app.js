@@ -35,4 +35,13 @@ app.post("/todos", (req, res) => {
   res.send(database[database.length - 1]);
 });
 
+app.delete("/todos/:index", (req, res) => {
+  const todoToDelete = database[req.params.index];
+  console.log(todoToDelete);
+
+  database = database.splice(req.params.index, 1);
+
+  res.send(todoToDelete);
+});
+
 module.exports = app;
