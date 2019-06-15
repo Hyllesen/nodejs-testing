@@ -28,6 +28,9 @@ app.patch("/todos/:index", (req, res) => {
   const index = req.params.index;
   const body = req.body;
   const todo = database[index];
+  if (body.done === undefined) {
+    return res.status(500).send();
+  }
   todo.done = body.done;
   res.send({ done: todo.done });
 });
