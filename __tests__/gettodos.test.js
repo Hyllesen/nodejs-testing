@@ -18,3 +18,12 @@ test("it should return another todo item", () => {
       done: false
     });
 });
+
+test("it should return all todos", () => {
+  return request(app)
+    .get("/todos")
+    .expect([
+      { name: "laundry", done: false },
+      { name: "washing clothes", done: false }
+    ]);
+});
