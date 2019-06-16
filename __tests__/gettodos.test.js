@@ -1,26 +1,32 @@
-const request = require("supertest");
+const supertest = require("supertest");
 const app = require("../app");
+const authenticate = require("../authenticate");
+
+let authToken = "";
+let request;
+
+beforeAll(async () => {
+  const token = await authenticate.getAuthToken();
+  authToken = token.body.token;
+  request = supertest.agent(app).set("Authorization", authToken);
+});
 
 test("it should return a todo item", () => {
-  return request(app)
-    .get("/todos/0")
-    .expect({
-      name: "laundry",
-      done: false
-    });
+  return request.get("/todos/0").expect({
+    name: "laundry",
+    done: false
+  });
 });
 
 test("it should return another todo item", () => {
-  return request(app)
-    .get("/todos/1")
-    .expect({
-      name: "washing clothes",
-      done: false
-    });
+  return request.get("/todos/1").expect({
+    name: "washing clothes",
+    done: false
+  });
 });
 
 test("it should return all todos", () => {
-  return request(app)
+  return request
     .get("/todos")
     .expect([
       { name: "laundry", done: false },
@@ -29,19 +35,13 @@ test("it should return all todos", () => {
 });
 
 it("should return 404 not found", () => {
-  return request(app)
-    .get("/todos/55")
-    .expect(404);
+  return request.get("/todos/55").expect(404);
 });
 
 it("should return 404 on invalid index", () => {
-  return request(app)
-    .get("/todos/hey")
-    .expect(404);
+  return request.get("/todos/hey").expect(404);
 });
 
 it("should return 401 because we are not logged in!", () => {
-  return request(app)
-    .get("/todos")
-    .expect(401);
+  return request.get("/todos").expect(401);
 });

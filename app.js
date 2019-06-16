@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const app = express();
+const authMiddleware = require("./middleware/auth");
 
 const todoRoutes = require("./routes/todo");
 
@@ -14,6 +15,8 @@ app.post("/login", (req, res) => {
     return res.send({ message: "login successful", token });
   }
 });
+
+app.use(authMiddleware);
 
 app.use(todoRoutes);
 
