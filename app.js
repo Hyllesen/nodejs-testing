@@ -9,10 +9,9 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 app.post("/login", (req, res) => {
-  console.log(req.body);
   if (req.body.username === "john" && req.body.password === "123") {
-    const token = jwt.sign("");
-    return res.send({ message: "login successful" });
+    const token = jwt.sign({ username: req.body.username }, "supersecretkey");
+    return res.send({ message: "login successful", token });
   }
 });
 

@@ -5,7 +5,7 @@ it("should return token on valid login", async () => {
   const response = await request(app)
     .post("/login")
     .send({ username: "john", password: "123" })
-    .expect(200)
-    .expect({ message: "login successful" });
-  expect(typeof response.token).toBe("string");
+    .expect(200);
+  expect(response.body.message).toBe("login successful");
+  expect(typeof response.body.token).toBe("string");
 });
