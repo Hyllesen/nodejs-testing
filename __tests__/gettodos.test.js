@@ -39,3 +39,9 @@ it("should return 404 on invalid index", () => {
     .get("/todos/hey")
     .expect(404);
 });
+
+it("should return 401 because we are not logged in!", () => {
+  return request(app)
+    .get("/todos")
+    .expect(401);
+});
